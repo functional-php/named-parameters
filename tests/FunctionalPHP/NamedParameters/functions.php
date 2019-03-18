@@ -7,8 +7,31 @@ use FunctionalPHP\NamedParameters as NP;
 
 require_once __DIR__.'/../../../src/functions.php';
 
+class Test {
+    public $value;
+
+    public function __construct($a, $b, $c, $d) {
+        $this->value = [$a, $b, $c, $d];
+    }
+}
+
 class stdClass extends atoum
 {
+    /** @dataProvider constructDataProvider */
+    public function testConstruct($value)
+    {
+        $instance = NP\construct(Test::class, $value);
+        $this->variable($instance->value)->isIdenticalTo(array_values($value));
+    }
+
+    public function constructDataProvider()
+    {
+        return [
+            [[1, 2, 3, 4]],
+            [['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4]],
+        ];
+    }
+
     /** @dataProvider simpleDataProvider */
     public function testNonAssociative(callable $callable, array $data, array $expected)
     {

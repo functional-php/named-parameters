@@ -3,10 +3,16 @@
 namespace FunctionalPHP\NamedParameters;
 
 function call_user_func_array_np($callback, array $arguments) {
+    $isConstructor = is_array($callback) && ($callback[1] ?? false) === '__construct';
+
     $keys = array_keys($arguments);
     if($keys === array_keys($keys)) {
         // we have a non associative array, so fallback to the traditional method.
-        return call_user_func_array($callback, $arguments);
+        if($isConstructor) {
+            return new $callback[0](...$arguments);
+        } else {
+            return call_user_func_array($callback, $arguments);
+        }
     }
 
     try {
@@ -23,6 +29,7 @@ function call_user_func_array_np($callback, array $arguments) {
                     break;
                 case 2:
                     $rc = new \ReflectionMethod($parts[0], $parts[1]);
+                    $isConstructor = $parts[1] === '__construct';
                     break;
                 default:
                     throw new \LogicException("Unable to determine callback type.");
@@ -44,5 +51,11 @@ function call_user_func_array_np($callback, array $arguments) {
         throw new \InvalidArgumentException(sprintf("Missing value for '%s' on '%s'.", $p->name, $rc->getName()));
     }, $parameters);
 
-    return forward_static_call_array($callback, $positionedArguments);
+    return $isConstructor ?
+        new $parts[0](...$positionedArguments) :
+        forward_static_call_array($callback, $positionedArguments);
+}
+
+function construct($class, array $arguments) {
+    return call_user_func_array_np([$class, '__construct'], $arguments);
 }
