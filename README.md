@@ -14,7 +14,7 @@ PHP does not allow to do that, this library ought to change that.
 
 ## Installation
 
-    composer require functional-php/named-paramters
+    composer require functional-php/named-parameters
 
 ## Basic Usage
 
