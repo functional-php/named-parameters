@@ -1,0 +1,29 @@
+{
+  "name": "functional-php/named-parameters",
+  "description": "Named parameters for functions, methods and constructors.",
+  "keywords": ["named-parameters", "function", "methods", "constructors"],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Gilles Crettenand",
+      "email": "gilles@crettenand.info"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0"
+  },
+  "require-dev": {
+    "atoum/atoum": "*"
+  },
+  "scripts": {
+    "test": "./vendor/bin/atoum --enable-branch-and-path-coverage"
+  },
+  "autoload": {
+    "psr-4": {
+      "FunctionalPHP\\NamedParameters\\": "./src"
+    },
+    "files": [
+      "src/functions.php"
+    ]
+  }
+}
