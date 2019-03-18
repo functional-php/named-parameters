@@ -63,3 +63,4 @@ Any contribution welcome :
 * https://github.com/phmLabs/NamedParameters/blob/master/NamedParameters.php
 * https://github.com/eclipxe13/construct-named-parameters
 * https://github.com/IcecaveStudios/evoke
+* https://github.com/Raphhh/trex-reflection/
