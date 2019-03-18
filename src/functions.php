@@ -44,5 +44,5 @@ function call_user_func_array_np($callback, array $arguments) {
         throw new \InvalidArgumentException(sprintf("Missing value for '%s' on '%s'.", $p->name, $rc->getName()));
     }, $parameters);
 
-    return call_user_func_array($callback, $positionedArguments);
+    return forward_static_call_array($callback, $positionedArguments);
 }
